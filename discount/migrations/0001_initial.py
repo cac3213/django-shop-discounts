@@ -36,6 +36,13 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('discount', ['PercentDiscount'])
 
+        # Adding model 'AbsoluteDiscount'
+        db.create_table('discount_absolutediscount', (
+            ('discountbase_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['discount.DiscountBase'], unique=True, primary_key=True)),
+            ('amount', self.gf('django.db.models.fields.DecimalField')(max_digits=5, decimal_places=2)),
+        ))
+        db.send_create_signal('discount', ['AbsoluteDiscount'])
+
         # Adding model 'CartItemPercentDiscount'
         db.create_table('discount_cartitempercentdiscount', (
             ('discountbase_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['discount.DiscountBase'], unique=True, primary_key=True)),
@@ -60,6 +67,9 @@ class Migration(SchemaMigration):
 
         # Deleting model 'PercentDiscount'
         db.delete_table('discount_percentdiscount')
+
+        # Deleting model 'AbsoluteDiscount'
+        db.delete_table('discount_absolutediscount')
 
         # Deleting model 'CartItemPercentDiscount'
         db.delete_table('discount_cartitempercentdiscount')
@@ -104,6 +114,11 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
+        },
+        'discount.absolutediscount': {
+            'Meta': {'object_name': 'AbsoluteDiscount', '_ormbases': ['discount.DiscountBase']},
+            'amount': ('django.db.models.fields.DecimalField', [], {'max_digits': '5', 'decimal_places': '2'}),
+            'discountbase_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['discount.DiscountBase']", 'unique': 'True', 'primary_key': 'True'})
         },
         'discount.cartdiscountcode': {
             'Meta': {'object_name': 'CartDiscountCode'},
