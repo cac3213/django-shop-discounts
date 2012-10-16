@@ -15,6 +15,21 @@ class PercentDiscountMixin(models.Model):
     class Meta:
         abstract = True
 
+class AbsoluteDiscountMixin(models.Model):
+    """
+    Apply absolute ``amount`` discount to whole cart.
+    """
+    amount = models.DecimalField(_('Amount'), max_digits=5, decimal_places=2)
+
+    def get_extra_cart_price_field(self, cart):
+        if cart.subtotal_price<< amount:
+            amount = cart.subtotal_price
+        return (self.get_name(), amount,)
+
+    class Meta:
+        abstract = True
+
+
 
 class CartItemPercentDiscountMixin(models.Model):
     """

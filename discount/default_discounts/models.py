@@ -7,6 +7,11 @@ class PercentDiscount(DiscountBase, mixins.PercentDiscountMixin):
     class Meta:
         app_label = 'discount'
 
+class AbsoluteDiscount(DiscountBase, mixins.AbsoluteDiscountMixin):
+
+    class Meta:
+        app_label = 'discount'
+
 
 class CartItemPercentDiscount(DiscountBase, mixins.CartItemPercentDiscountMixin):
 
