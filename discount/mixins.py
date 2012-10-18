@@ -22,8 +22,8 @@ class AbsoluteDiscountMixin(models.Model):
     amount = models.DecimalField(_('Amount'), max_digits=5, decimal_places=2)
 
     def get_extra_cart_price_field(self, cart):
-        if cart.subtotal_price < self.amount:
-            amount = cart.subtotal_price
+        if cart.subtotal_price < -1 * self.amount:
+            amount = -1 * cart.subtotal_price
         else:
             amount = self.amount
         return (self.get_name(), amount,)
